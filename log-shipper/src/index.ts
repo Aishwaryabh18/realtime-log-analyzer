@@ -11,7 +11,7 @@ const ws = new WebSocket(WS_URL);
 ws.on("open", () => {
   console.log("Connected to WS server");
 
-  const tail = new Tail(LOG_FILE);
+  const tail = new Tail.Tail(LOG_FILE);
 
   tail.on("line", (line) => {
     const event = parseNginxLog(line);
@@ -19,4 +19,7 @@ ws.on("open", () => {
       ws.send(JSON.stringify(event));
     }
   });
+});
+ws.on("error", (err) => {
+  console.error("WebSocket error:", err);
 });

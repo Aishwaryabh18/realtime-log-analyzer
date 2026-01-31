@@ -1,8 +1,4 @@
-import dynamic from "next/dynamic";
-
-const LiveLogs = dynamic(() => import("@/components/LiveLogs"), {
-  ssr: false,
-});
+import LiveLogs from "../components/LiveLogs";
 
 export default function Page() {
   return (

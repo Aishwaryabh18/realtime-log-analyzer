@@ -1,35 +1,28 @@
 import { WebSocketServer, WebSocket } from "ws";
-import { LogEvent } from "@/types/log";
+import { ingest } from "./analyzer";
+import { LogEvent } from "../types/log";
 
-let wss: WebSocketServer | null = null;
+const wss = new WebSocketServer({ port: 4000 });
 
-export function initWSServer(server: any) {
-  if (wss) return wss;
+console.log("WebSocket server running on ws://localhost:4000");
 
-  wss = new WebSocketServer({ server });
+wss.on("connection", (socket: WebSocket) => {
+  console.log("Log client connected");
 
-  wss.on("connection", (socket: WebSocket) => {
-    console.log("WS client connected");
+  socket.on("message", (data) => {
+    const event: LogEvent = JSON.parse(data.toString());
+    const stats = ingest(event);
 
-    socket.on("message", (data) => {
-      try {
-        const event: LogEvent = JSON.parse(data.toString());
+    const payload = { event, stats };
 
-        // broadcast to all clients
-        wss?.clients.forEach((client) => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(JSON.stringify(event));
-          }
-        });
-      } catch (err) {
-        console.error("Invalid log event", err);
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify(payload));
       }
-    });
-
-    socket.on("close", () => {
-      console.log("WS client disconnected");
     });
   });
 
-  return wss;
-}
+  socket.on("close", () => {
+    console.log("Log client disconnected");
+  });
+});

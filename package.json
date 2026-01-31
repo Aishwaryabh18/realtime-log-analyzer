@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "ts-node server.ts",
     "build": "next build",
-    "start": "NODE_ENV=production ts-node server.ts",
-    "lint": "eslint"
+    "start": "NODE_ENV=production ts-node server.ts"
   },
   "dependencies": {
     "next": "16.1.6",
@@ -16,13 +15,15 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^20.19.30",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/ws": "^8.18.1",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

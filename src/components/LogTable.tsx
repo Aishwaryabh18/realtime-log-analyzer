@@ -1,6 +1,6 @@
 "use client";
 
-import { LogEvent } from "@/types/log";
+import { LogEvent } from "../types/log";
 
 export default function LogTable({ logs }: { logs: LogEvent[] }) {
   return (
