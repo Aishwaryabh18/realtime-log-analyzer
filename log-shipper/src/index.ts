@@ -9,8 +9,7 @@ const LOG_FILE = "/var/log/nginx/access.log";
 const ws = new WebSocket(WS_URL);
 
 ws.on("open", () => {
-  console.log("Connected to WS server");
-
+  console.log("UI connected to WS 4000");
   const tail = new Tail.Tail(LOG_FILE);
 
   tail.on("line", (line) => {

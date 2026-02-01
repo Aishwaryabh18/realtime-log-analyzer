@@ -12,7 +12,7 @@ export function useLogStream() {
   const [stats, setStats] = useState<StreamStats | null>(null);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:3000");
+    const ws = new WebSocket("ws://localhost:4000");
     wsRef.current = ws;
 
     ws.onmessage = (event) => {
@@ -27,6 +27,7 @@ export function useLogStream() {
       });
     };
     ws.onmessage = (event) => {
+      console.log("WS message received:", event.data);
       const payload: StreamPayload = JSON.parse(event.data);
 
       setStats(payload.stats);
