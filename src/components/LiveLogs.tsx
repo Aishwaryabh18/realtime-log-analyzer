@@ -1,12 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 import { useLogStream } from "../hooks/useLogStream";
 import LogTable from "./LogTable";
 import LogFilters from "./LogFilters";
 
 export default function LiveLogs() {
-  const { events, stats } = useLogStream();
+  useLogStream();
+
+  const events = useSelector((s: RootState) => s.logs.events);
+  const stats = useSelector((s: RootState) => s.logs.stats);
+
   const [active, setActive] = useState(
     new Set(["INFO", "WARN", "ERROR", "FATAL"]),
   );
