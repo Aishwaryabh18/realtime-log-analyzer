@@ -38,7 +38,7 @@ export default function LiveLogs() {
         </div>
       )}
 
-      <LogTable logs={filtered} />
+      {/* <LogTable logs={filtered} /> */}
     </div>
   );
 }
